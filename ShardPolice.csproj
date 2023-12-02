@@ -10,6 +10,14 @@
     <RootNamespace>ShardPolice</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <VRisingServerPath>E:\Games\SteamLibrary\steamapps\common\VRisingDedicatedServer</VRisingServerPath>
+  </PropertyGroup>
+
+  <Target Name="Deploy To Dev" AfterTargets="AfterBuild">
+		<Copy SourceFiles="$(OutputPath)\$(AssemblyName).dll" DestinationFolder="$(VRisingServerPath)/BepInEx/BloodstonePlugins" />
+	</Target>
+
   <ItemGroup>
     <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.668" IncludeAssets="compile" />
     <PackageReference Include="BepInEx.Core" Version="6.0.0-be.668" IncludeAssets="compile" />
