@@ -5,6 +5,7 @@
 - Limit players to 1 shard buff at a time. Activating a shard replaces any previously held shard buff with the new one.
   - Optional, can be enabled/disabled via config. Enabled by default.
 - Commands (admin only) to remove shard buffs from players.
+  - `shard-buffs-remove Bobby` removes the shard buffs from the player named "Bobby". (`sbr Bobby` for short)
   - `shard-buffs-remove-everyone` removes the shard buffs from all players. (`sbre` for short)
   - affected players are notified when their buffs are removed.
 
@@ -15,8 +16,6 @@
   - optional, can be enabled/disabled. default enabled
 - strip shard buff from players when the placed shard is dropped on the ground
   - optional, can be enabled/disabled. default enabled
-- command (admin only) to strip shard buffs from all players or a specific player
-  - should create a system message for affected players
 - command (admin only) to reset shards (despawn placed shards, shard items in inventories, shard items on ground, etc) and return them to the bosses that originally hold them.
   - should strip shard buffs from all players
   - should create system message for all players
