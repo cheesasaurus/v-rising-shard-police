@@ -22,16 +22,18 @@ public class ShardUtil {
 
     public static void RemoveShardBuffsFromPlayer(Entity character) {
         foreach (var shardBuff in ShardBuffs) {
-            BuffUtil.RemoveBuffFromPlayer(character, shardBuff);
+            BuffUtil.TryRemoveBuffFromPlayer(character, shardBuff);
         }
     }
 
-    public static void RemoveShardBuffsFromPlayerExceptOne(Entity character, PrefabGUID keptBuff) {
+    public static bool TryRemoveShardBuffsFromPlayerExceptOne(Entity character, PrefabGUID keptBuff) {
+        bool wasABuffRemoved = false;
         foreach (var shardBuff in ShardBuffs) {
             if (!shardBuff.Equals(keptBuff)) {
-                BuffUtil.RemoveBuffFromPlayer(character, shardBuff);
+                wasABuffRemoved |= BuffUtil.TryRemoveBuffFromPlayer(character, shardBuff);
             }
         }
+        return wasABuffRemoved;
     }
 
     public static bool IsShardBuffRelated(Entity entity) {

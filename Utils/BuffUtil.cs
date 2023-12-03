@@ -25,12 +25,14 @@ public class BuffUtil {
         debugEventsSystem.ApplyBuff(fromCharacter, buffEvent);
     }
 
-    public static void RemoveBuffFromPlayer(Entity character, PrefabGUID buffPrefabGUID) {
+    public static bool TryRemoveBuffFromPlayer(Entity character, PrefabGUID buffPrefabGUID) {
         var entityManager = VWorld.Server.EntityManager;
         var playerHasBuff = BuffUtility.TryGetBuff(entityManager, character, buffPrefabGUID, out var buffEntity);
         if (playerHasBuff) {
             DestroyUtility.Destroy(entityManager, buffEntity, DestroyDebugReason.TryRemoveBuff);
+            return true;
         }
+        return false;
     }
 
 }
