@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Bloodstone.API;
 using ProjectM;
 using ShardPolice.Prefabs;
@@ -13,6 +14,20 @@ public class ShardUtil {
         ShardPrefabs.AB_Interact_UseRelic_Monster_Buff,
         ShardPrefabs.AB_Interact_UseRelic_Paladin_Buff,
     };
+
+    private static Dictionary<PrefabGUID, string> ShardNames = new Dictionary<PrefabGUID, string>(){
+        { ShardPrefabs.AB_Interact_UseRelic_Behemoth_Buff, "Behemoth"},
+        { ShardPrefabs.AB_Interact_UseRelic_Manticore_Buff, "Winged Horror"},
+        { ShardPrefabs.AB_Interact_UseRelic_Monster_Buff, "Monster"},
+        { ShardPrefabs.AB_Interact_UseRelic_Paladin_Buff, "Solarus"},
+    };
+
+    public static string ShardName(PrefabGUID prefabGUID) {
+        if (ShardNames.TryGetValue(prefabGUID, out string shardName)) {
+            return shardName;
+        }
+        return "unrecognized shard";
+    }
 
     public static void GiveShardBuffsToPlayer(Entity character) {
         foreach (var shardBuff in ShardBuffs) {

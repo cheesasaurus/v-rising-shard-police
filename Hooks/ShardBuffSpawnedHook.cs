@@ -26,7 +26,7 @@ public static class ShardBuffSpawnedHook
         foreach (var psb in buffTracker.PlayerShardBuffs()) {
             var wasABuffRemoved = ShardUtil.TryRemoveShardBuffsFromPlayerExceptOne(psb.Character, psb.LatestShardBuffGuid);
             if (wasABuffRemoved) {
-                Plugin.Logger.LogInfo($"Limited shard buffs for player {psb.CharacterName} (steam#{psb.User.PlatformId})");
+                Plugin.Logger.LogInfo($"Limited shard buffs for player {psb.CharacterName} (steam#{psb.User.PlatformId}). Only the {ShardUtil.ShardName(psb.LatestShardBuffGuid)} buff was kept.");
             }
         }
     }
