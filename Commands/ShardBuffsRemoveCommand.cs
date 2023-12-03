@@ -11,7 +11,7 @@ public class ShardBuffsRemoveCommand {
     [Command("shard-buffs-remove", shortHand: "sbr", description: "remove shard buffs from a player", adminOnly: true)]
     public void Execute(ChatCommandContext ctx, string playerName = "") {
         if (playerName.Equals("")) {
-            ShardUtil.TryRemoveShardBuffsFromPlayer(ctx.User.LocalCharacter._Entity);
+            ShardBuffUtil.TryRemoveShardBuffsFromPlayer(ctx.User.LocalCharacter._Entity);
             ctx.Reply("Removed all shard buffs from self.");
             return;
         }
@@ -23,7 +23,7 @@ public class ShardBuffsRemoveCommand {
 
         var targetUser = nullableUser.Value;
         var properlyCasedName = targetUser.CharacterName;
-        var wasABuffRemoved = ShardUtil.TryRemoveShardBuffsFromPlayer(targetUser.LocalCharacter._Entity);
+        var wasABuffRemoved = ShardBuffUtil.TryRemoveShardBuffsFromPlayer(targetUser.LocalCharacter._Entity);
         if (!wasABuffRemoved) {
             ctx.Reply($"{properlyCasedName} did not have any shard buffs to remove.");
             return;

@@ -6,7 +6,7 @@ using Unity.Entities;
 
 namespace ShardPolice.Utils;
 
-public class ShardUtil {
+public class ShardBuffUtil {
 
     private static readonly PrefabGUID[] ShardBuffs = {
         ShardPrefabs.AB_Interact_UseRelic_Behemoth_Buff,
