@@ -1,11 +1,12 @@
 # Shard Police
 
 ## Features
-nothing yet
+
+- Limit players to 1 shard buff at a time. Activating a shard replaces any previously held shard buff with the new one.
+  - Optional, can be enabled/disabled via config. Enabled by default.
 
 ## TODO (not implemented)
-- limit players to 1 shard buff at a time
-  - optional, can be enabled/disabled. default enabled
+
 - mitigate sharing shard buffs outside the clan that holds the shard. strip shard buffs on clan changes. think about potential workarounds
   - e.g. shard holder joins a clan, they all grab the buff, then the shard holder leaves. simply removing the buff from the holder when they leave wouldn't be enough.
   - optional, can be enabled/disabled. default enabled
