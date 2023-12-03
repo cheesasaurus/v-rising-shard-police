@@ -4,6 +4,7 @@ using HarmonyLib;
 using ProjectM;
 using Unity.Collections;
 using Unity.Entities;
+using System.Collections.Generic;
 
 namespace ShardPolice.Hooks;
 
@@ -16,24 +17,54 @@ public static class ShardBuffSpawnedHook
         if (!ShardPoliceConfig.LimitShardBuffsToOnlyOneAtATime.Value) {
             return;
         }
+        var buffTracker = new BuffTracker();
         var events = __instance.__OnUpdate_LambdaJob0_entityQuery.ToEntityArray(Allocator.Temp);
-        foreach (var entity in events)
-        {
-            if (ShardUtil.IsShardBuffRelated(entity)) {
-                HandleShardBuffSpawned(entity);
-            }
+        foreach (var entity in events) {
+            buffTracker.BuffWasSpawned(entity);
+        }
+        foreach (var psb in buffTracker.PlayerShardBuffs()) {
+            ShardUtil.RemoveShardBuffsFromPlayerExceptOne(psb.Character, psb.LatestShardBuffGuid);
+            Plugin.Logger.LogInfo($"Limited shard buffs for player {psb.CharacterName}");
         }
     }
 
-    private static void HandleShardBuffSpawned(Entity entity) {
-        var entityManager = VWorld.Game.EntityManager;
-        var buffPrefabGuid = entityManager.GetComponentData<PrefabGUID>(entity);
-        var entityOwner = entityManager.GetComponentData<EntityOwner>(entity);
+    /**
+     * Used to keep track of players getting shard buffs during a game tick
+     */
+    private class BuffTracker {
+        public class PlayerShardBuff {
+            public Entity Character;
+            public FixedString64 CharacterName;
+            public PrefabGUID LatestShardBuffGuid;
+        }
 
-        if (entityManager.HasComponent<PlayerCharacter>(entityOwner.Owner)) {
-            var playerCharacter = entityManager.GetComponentData<PlayerCharacter>(entityOwner.Owner);
-            ShardUtil.RemoveShardBuffsFromPlayerExceptOne(entityOwner.Owner, buffPrefabGuid);
-            Plugin.Logger.LogInfo($"Limited shard buffs for player {playerCharacter.Name}");
+        private EntityManager EntityManager = VWorld.Game.EntityManager;
+        private Dictionary<Entity, PlayerShardBuff> _PlayerShardBuffs = new Dictionary<Entity, PlayerShardBuff>();
+
+        public void BuffWasSpawned(Entity entity) {
+            if (!ShardUtil.IsShardBuffRelated(entity)) {
+                return;
+            }
+            var entityOwner = EntityManager.GetComponentData<EntityOwner>(entity);
+            var buffedCharacter = entityOwner.Owner;
+            if (!EntityManager.HasComponent<PlayerCharacter>(buffedCharacter)) {
+                return;
+            }
+            var playerCharacter = EntityManager.GetComponentData<PlayerCharacter>(buffedCharacter);
+
+            PlayerShardBuff playerBuff;
+            if (!_PlayerShardBuffs.TryGetValue(buffedCharacter, out playerBuff)) {
+                playerBuff = new PlayerShardBuff() {
+                    Character = buffedCharacter,
+                    CharacterName = playerCharacter.Name
+                };
+                _PlayerShardBuffs.Add(buffedCharacter, playerBuff);
+            }
+            playerBuff.LatestShardBuffGuid = EntityManager.GetComponentData<PrefabGUID>(entity);
+        }
+
+        public IEnumerable<PlayerShardBuff> PlayerShardBuffs() {
+            return _PlayerShardBuffs.Values;
         }
     }
 
