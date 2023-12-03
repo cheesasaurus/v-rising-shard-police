@@ -16,13 +16,23 @@ public static class ItemUtil {
 		return InventoryUtilitiesServer.TryAddItem(addItemSettings, character, prefabGUID, amount);
     }
 
-    public static bool TryDropItem(Entity character, PrefabGUID prefabGUID, int amount) {
+    public static bool TryDropItemFromInventory(Entity character, PrefabGUID prefabGUID, int amount) {
         var entityManager = VWorld.Server.EntityManager;
         var gameDataSystem = VWorld.Server.GetExistingSystem<GameDataSystem>();
         var commandBuffer = VWorld.Server.GetExistingSystem<EntityCommandBufferSystem>().CreateCommandBuffer();
 
         InventoryUtilities.TryGetMainInventoryEntity(entityManager, character, out var mainInventoryEntity);
         return InventoryUtilitiesServer.TryDropItem(entityManager, commandBuffer, gameDataSystem.ItemHashLookupMap, mainInventoryEntity, prefabGUID, amount);
+    }
+
+    public static bool TryDropSpawnedItem(Entity character, PrefabGUID prefabGUID, int amount) {
+        var entityManager = VWorld.Server.EntityManager;
+        var gameDataSystem = VWorld.Server.GetExistingSystem<GameDataSystem>();
+        var commandBuffer = VWorld.Server.GetExistingSystem<EntityCommandBufferSystem>().CreateCommandBuffer();
+
+        InventoryUtilitiesServer.CreateDroppedItemEntity(entityManager, commandBuffer, gameDataSystem.ItemHashLookupMap, character, prefabGUID, amount);
+
+        return true;
     }
 
 }

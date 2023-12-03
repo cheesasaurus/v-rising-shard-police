@@ -15,6 +15,7 @@ public class ShardsResetCommand {
         }
         ShardItemUtil.AppropriatePlacedShards(ctx.User.LocalCharacter._Entity);
         ShardItemUtil.PrepareShardItemsToDespawn();
+        ShardItemUtil.CheckItems();
 
         ServerChatUtils.SendSystemMessageToAllClients(VWorld.Server.EntityManager, "Shards have been reset!");
     }
