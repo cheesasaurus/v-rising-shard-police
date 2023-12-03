@@ -35,10 +35,12 @@ public class ShardUtil {
         }
     }
 
-    public static void RemoveShardBuffsFromPlayer(Entity character) {
+    public static bool TryRemoveShardBuffsFromPlayer(Entity character) {
+        bool wasABuffRemoved = false;
         foreach (var shardBuff in ShardBuffs) {
-            BuffUtil.TryRemoveBuffFromPlayer(character, shardBuff);
+            wasABuffRemoved |= BuffUtil.TryRemoveBuffFromPlayer(character, shardBuff);
         }
+        return wasABuffRemoved;
     }
 
     public static bool TryRemoveShardBuffsFromPlayerExceptOne(Entity character, PrefabGUID keptBuff) {

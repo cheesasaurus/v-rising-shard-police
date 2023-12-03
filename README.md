@@ -4,6 +4,9 @@
 
 - Limit players to 1 shard buff at a time. Activating a shard replaces any previously held shard buff with the new one.
   - Optional, can be enabled/disabled via config. Enabled by default.
+- Commands (admin only) to remove shard buffs from players.
+  - `shard-buffs-remove-everyone` removes the shard buffs from all players. (`sbre` for short)
+  - affected players are notified when their buffs are removed.
 
 ## TODO (not implemented)
 
