@@ -13,9 +13,9 @@ public class ShardsResetCommand {
         foreach (var user in UserUtil.FindAllUsers()) {
             ShardBuffUtil.TryRemoveShardBuffsFromPlayer(user.LocalCharacter._Entity);
         }
+        ShardItemUtil.AppropriatePlacedShards(ctx.User.LocalCharacter._Entity);
         ShardItemUtil.PrepareShardItemsToDespawn();
-        // TODO: despawn placed shards
-        
+
         ServerChatUtils.SendSystemMessageToAllClients(VWorld.Server.EntityManager, "Shards have been reset!");
     }
 
