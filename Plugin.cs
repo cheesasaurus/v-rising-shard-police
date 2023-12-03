@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Logging;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using VampireCommandFramework;
@@ -12,10 +13,12 @@ namespace ShardPolice;
 public class Plugin : BasePlugin
 {
     Harmony _harmony;
+    public static ManualLogSource Logger;
 
     public override void Load()
     {
         // Plugin startup logic
+        Logger = Log;
         Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} version {MyPluginInfo.PLUGIN_VERSION} is loaded!");
 
         // Harmony patching

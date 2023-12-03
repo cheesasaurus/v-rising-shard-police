@@ -1,3 +1,4 @@
+using Bloodstone.API;
 using ProjectM;
 using ShardPolice.Prefabs;
 using Unity.Entities;
@@ -31,6 +32,20 @@ public class ShardUtil {
                 BuffUtil.RemoveBuffFromPlayer(character, shardBuff);
             }
         }
+    }
+
+    public static bool IsShardBuffRelated(Entity entity) {
+        var entityManager = VWorld.Server.EntityManager;
+        if (!entityManager.HasComponent<PrefabGUID>(entity)) {
+            return false;
+        }
+        var prefabGUID = entityManager.GetComponentData<PrefabGUID>(entity);
+        foreach (var shardBuffGUID in ShardBuffs) {
+            if (prefabGUID.Equals(shardBuffGUID)) {
+                return true;
+            }
+        }
+        return false;
     }
     
 }
