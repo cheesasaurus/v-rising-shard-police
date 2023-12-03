@@ -5,6 +5,7 @@ using ProjectM;
 using Unity.Collections;
 using Unity.Entities;
 using System.Collections.Generic;
+using ProjectM.Network;
 
 namespace ShardPolice.Hooks;
 
@@ -24,7 +25,7 @@ public static class ShardBuffSpawnedHook
         }
         foreach (var psb in buffTracker.PlayerShardBuffs()) {
             ShardUtil.RemoveShardBuffsFromPlayerExceptOne(psb.Character, psb.LatestShardBuffGuid);
-            Plugin.Logger.LogInfo($"Limited shard buffs for player {psb.CharacterName}");
+            Plugin.Logger.LogInfo($"Limited shard buffs for player {psb.CharacterName} (steam#{psb.User.PlatformId})");
         }
     }
 
@@ -35,6 +36,7 @@ public static class ShardBuffSpawnedHook
         public class PlayerShardBuff {
             public Entity Character;
             public FixedString64 CharacterName;
+            public User User;
             public PrefabGUID LatestShardBuffGuid;
         }
 
@@ -56,7 +58,8 @@ public static class ShardBuffSpawnedHook
             if (!_PlayerShardBuffs.TryGetValue(buffedCharacter, out playerBuff)) {
                 playerBuff = new PlayerShardBuff() {
                     Character = buffedCharacter,
-                    CharacterName = playerCharacter.Name
+                    CharacterName = playerCharacter.Name,
+                    User = EntityManager.GetComponentData<User>(playerCharacter.UserEntity),
                 };
                 _PlayerShardBuffs.Add(buffedCharacter, playerBuff);
             }
