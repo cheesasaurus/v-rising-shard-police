@@ -12,14 +12,10 @@ public class ShardsResetCommand {
     public void Execute(ChatCommandContext ctx) {
         foreach (var user in UserUtil.FindAllUsers()) {
             ShardBuffUtil.TryRemoveShardBuffsFromPlayer(user.LocalCharacter._Entity);
-            
-            ShardItemUtil.FindShardItemsFromPlayer(user.LocalCharacter._Entity);
         }
-        // WIP
-
-        // TODO: despawn shards in inventories
+        ShardItemUtil.PrepareShardItemsToDespawn();
         // TODO: despawn placed shards
-        // TODO: despawn shards on ground
+        
         ServerChatUtils.SendSystemMessageToAllClients(VWorld.Server.EntityManager, "Shards have been reset!");
     }
 
