@@ -13,6 +13,7 @@
 
 - mitigate sharing shard buffs outside the clan that holds the shard. strip shard buffs on clan changes. think about potential workarounds
   - e.g. shard holder joins a clan, they all grab the buff, then the shard holder leaves. simply removing the buff from the holder when they leave wouldn't be enough.
+  - e.g. exposing castle heart to take control of shard
   - optional, can be enabled/disabled. default enabled
 - strip shard buff from players when the placed shard is dropped on the ground
   - optional, can be enabled/disabled. default enabled
