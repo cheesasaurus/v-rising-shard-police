@@ -13,6 +13,9 @@ public static class ShardBuffSpawnedHook
 {
     public static void Prefix(BuffSystem_Spawn_Server __instance)
     {
+        if (!ShardPoliceConfig.LimitShardBuffsToOnlyOneAtATime.Value) {
+            return;
+        }
         var events = __instance.__OnUpdate_LambdaJob0_entityQuery.ToEntityArray(Allocator.Temp);
         foreach (var entity in events)
         {

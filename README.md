@@ -16,3 +16,20 @@ nothing yet
 - command (admin only) to reset shards (despawn placed shards, shard items in inventories, shard items on ground, etc) and return them to the bosses that originally hold them.
   - should strip shard buffs from all players
   - should create system message for all players
+
+## Config
+
+Running the server with this mod installed will create a configuration file at `$(VRisingServerPath)/BepInEx/config/ShardPolice.cfg`.
+
+```
+## Settings file was created by plugin ShardPolice v1.0.0
+## Plugin GUID: ShardPolice
+
+[Shard Buffs]
+
+## Whether or not to limit each player to only 1 shard buff at a time
+# Setting type: Boolean
+# Default value: true
+LimitShardBuffsToOnlyOneAtATime = true
+
+```

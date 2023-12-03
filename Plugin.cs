@@ -19,6 +19,7 @@ public class Plugin : BasePlugin
     {
         // Plugin startup logic
         Logger = Log;
+        ShardPoliceConfig.Init(Config);
         Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} version {MyPluginInfo.PLUGIN_VERSION} is loaded!");
 
         // Harmony patching
