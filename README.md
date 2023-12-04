@@ -4,6 +4,7 @@
 
 - Limit players to 1 shard buff at a time. Activating a shard replaces any previously held shard buff with the new one.
   - Optional, can be enabled/disabled via config. Enabled by default.
+  - demo: https://www.youtube.com/watch?v=-rOv9I48Xks
 - Commands (admin only) to remove shard buffs from players.
   - `.shard-buffs-remove Bobby` removes the shard buffs from the player named "Bobby". (`.sbr Bobby` for short)
   - `.shard-buffs-remove-everyone` removes the shard buffs from all players. (`.sbre` for short)
@@ -12,6 +13,7 @@
   - `.shards-reset`
   - Players are notified when this is used.
   - Removes shard buffs from all players and returns shards to their bosses.
+  - demo: https://www.youtube.com/watch?v=cwIH6dwlZ8Q
 
 ## TODO (not implemented)
 
@@ -19,7 +21,7 @@
   - e.g. shard holder joins a clan, they all grab the buff, then the shard holder leaves. simply removing the buff from the holder when they leave wouldn't be enough.
   - e.g. exposing castle heart to take control of shard
   - optional, can be enabled/disabled. default enabled
-- strip shard buff from players when the placed shard is dropped on the ground
+- strip shard buff from players when the placed shard is picked up / dropped on the ground
   - optional, can be enabled/disabled. default enabled
 
 ## Config
