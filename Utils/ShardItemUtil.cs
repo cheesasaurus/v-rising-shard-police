@@ -44,8 +44,6 @@ public static class ShardItemUtil {
 
         foreach (var shardBuildingEntity in query.ToEntityArray(Allocator.Temp)) {
             entityManager.TryGetComponentData<PrefabGUID>(shardBuildingEntity, out var buildingPrefabGUID);
-            Plugin.Logger.LogMessage(buildingPrefabGUID);
-
             if (ShardItemForBuilding.TryGetValue(buildingPrefabGUID, out var itemPrefabGUID)) {
                 if (ItemUtil.TryDropNewItemWithCustomLifetime(character, itemPrefabGUID, 1, 1)) {
                     DestroyUtility.Destroy(entityManager, shardBuildingEntity, DestroyDebugReason.Consume);

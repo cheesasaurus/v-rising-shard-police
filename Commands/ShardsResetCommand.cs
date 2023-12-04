@@ -15,8 +15,8 @@ public class ShardsResetCommand {
         }
         ShardItemUtil.RemovePlacedShardsAndDropNearCharacterToDespawn(ctx.User.LocalCharacter._Entity);
         ShardItemUtil.PrepareShardItemsToDespawn();
-
         ServerChatUtils.SendSystemMessageToAllClients(VWorld.Server.EntityManager, "Shards have been reset!");
+        Plugin.Logger.LogMessage($"Shards were reset by {ctx.User.CharacterName} (steam#{ctx.User.PlatformId})");
     }
 
 }
