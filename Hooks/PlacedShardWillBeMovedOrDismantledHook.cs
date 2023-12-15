@@ -2,6 +2,7 @@ using Bloodstone.API;
 using HarmonyLib;
 using ProjectM;
 using ProjectM.Network;
+using ProjectM.Shared;
 using ShardPolice.Utils;
 using Unity.Collections;
 using Unity.Entities;
@@ -25,25 +26,41 @@ public static class PlacedShardWillBeMovedOrDismantledHook {
     private static void HandleTileWillBeDismantled(Entity job) {
         var entityManager = VWorld.Server.EntityManager;
         var data = entityManager.GetComponentData<DismantleTileModelEvent>(job);
-        var networkId = data.Target;
-        // todo: how to efficiently get target entity?
-
-        // FromCharacter
-        // DismantleTileModelEvent
-        // NetworkEventType
-        // ReceiveNetworkEventTag
+        if (NetworkedEntityUtil.TryFindEntity(data.Target, out var tileEntity)) {
+            if (entityManager.HasComponent<Relic>(tileEntity)) {
+                HandleShardWillBeDismantled(job, tileEntity);
+            }
+        }
     }
 
     private static void HandleTileWillBeMoved(Entity job) {
         var entityManager = VWorld.Server.EntityManager;
         var data = entityManager.GetComponentData<MoveTileModelEvent>(job);
-        var networkId = data.Target;
-        // todo: how to efficiently get target entity?
+        if (NetworkedEntityUtil.TryFindEntity(data.Target, out var tileEntity)) {
+            if (entityManager.HasComponent<Relic>(tileEntity)) {
+                HandleShardWillBeMoved(job, tileEntity);
+            }
+        }
+    }
 
-        // FromCharacter
-        // MoveTileModelEvent
-        // NetworkEventType
-        // ReceiveNetworkEventTag
+    private static void HandleShardWillBeDismantled(Entity job, Entity tileEntity) {
+        Plugin.Logger.LogMessage("relic will be dismantled");
+        SystemPatchUtil.CancelJob(job);
+        SendMessageToActingUser(job, "Cannot dismantle placed shard during raid hours!");
+        
+    }
+
+    private static void HandleShardWillBeMoved(Entity job, Entity tileEntity) {
+        Plugin.Logger.LogMessage("relic will be moved");
+        SystemPatchUtil.CancelJob(job);
+        SendMessageToActingUser(job, "Cannot move placed shard during raid hours!");
+    }
+
+    private static void SendMessageToActingUser(Entity job, string message) {
+        var entityManager = VWorld.Server.EntityManager;
+        var fromCharacter = entityManager.GetComponentData<FromCharacter>(job);
+        var user = entityManager.GetComponentData<User>(fromCharacter.User);
+        ServerChatUtils.SendSystemMessageToClient(entityManager, user, message);
     }
 
 }
