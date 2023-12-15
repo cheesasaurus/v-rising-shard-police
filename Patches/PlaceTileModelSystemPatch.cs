@@ -12,7 +12,7 @@ public static class PlaceTileModelSystemPatches {
     public static class VerifyCanDismantle {
         public static void Postfix(ref bool __result, EntityManager entityManager, Entity tileModelEntity) {
             if (entityManager.HasComponent<Relic>(tileModelEntity)) {
-                if (RaidTimeUtil.IsRaidTimeNow()) {
+                if (ShardPoliceConfig.PreventShardOwnersMovingPlacedShardDuringRaidHours.Value && RaidTimeUtil.IsRaidTimeNow()) {
                     __result = false;
                 }
             }
@@ -23,7 +23,7 @@ public static class PlaceTileModelSystemPatches {
     public static class VerifyIfCanMoveOrRotateAfterBuilt {
         public static void Postfix(ref bool __result, EntityManager entityManager, Entity tileModelEntity) {
             if (entityManager.HasComponent<Relic>(tileModelEntity)) {
-                if (RaidTimeUtil.IsRaidTimeNow()) {
+                if (ShardPoliceConfig.PreventShardOwnersMovingPlacedShardDuringRaidHours.Value && RaidTimeUtil.IsRaidTimeNow()) {
                     __result = false;
                 }
             }
