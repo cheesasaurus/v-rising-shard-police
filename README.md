@@ -1,5 +1,7 @@
 # Shard Police
 
+⚠️WIP⚠️
+
 ## Features
 
 - Limit players to 1 shard buff at a time. Activating a shard replaces any previously held shard buff with the new one.
