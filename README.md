@@ -25,6 +25,8 @@
   - optional, can be enabled/disabled. default enabled
 - strip shard buff from players when the placed shard is picked up / dropped on the ground
   - optional, can be enabled/disabled. default enabled
+- lock placed shards from being picked up by owner during raid hours
+  - optional, can be enabled/disabled. default enabled
 
 ## Config
 
